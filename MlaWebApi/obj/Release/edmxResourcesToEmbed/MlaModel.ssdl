@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MlaDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="group">
+    <Key>
+      <PropertyRef Name="groupNo" />
+    </Key>
+    <Property Name="userId" Type="bigint" />
+    <Property Name="groupNo" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="groupName" Type="nvarchar(max)" />
+    <Property Name="status" Type="bit" />
+  </EntityType>
+  <EntityType Name="group_key">
+    <Key>
+      <PropertyRef Name="groupKeyId" />
+    </Key>
+    <Property Name="userId" Type="bigint" />
+    <Property Name="groupKeyId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="groupKey" Type="nvarchar" MaxLength="50" />
+    <Property Name="groupNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="status" Type="varchar" MaxLength="50" />
+    <Property Name="versionNo" Type="numeric" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="postId" />
+    </Key>
+    <Property Name="post" Type="nvarchar" MaxLength="50" />
+    <Property Name="postType" Type="nvarchar" MaxLength="50" />
+    <Property Name="groupNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="postId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="versionNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+    <Property Name="digitalSign" Type="nvarchar" MaxLength="50" />
+    <Property Name="owner" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="sessionKey" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="register">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userName" Type="nvarchar" MaxLength="12" />
+    <Property Name="password" Type="nvarchar" MaxLength="100" />
+    <Property Name="userType" Type="nvarchar" MaxLength="100" />
+    <Property Name="userId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="publicKey" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityContainer Name="MlaDatabaseModelStoreContainer">
+    <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="group_key" EntityType="Self.group_key" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="register" EntityType="Self.register" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

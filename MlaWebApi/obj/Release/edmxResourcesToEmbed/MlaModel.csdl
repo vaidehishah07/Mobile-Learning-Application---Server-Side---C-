@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MlaDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="group">
+    <Key>
+      <PropertyRef Name="groupNo" />
+    </Key>
+    <Property Name="userId" Type="Int64" />
+    <Property Name="groupNo" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="groupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group" ToRole="group_key" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_register" FromRole="group" ToRole="register" />
+    <NavigationProperty Name="posts" Relationship="MlaDatabaseModel.FK_post_group" FromRole="group" ToRole="post" />
+  </EntityType>
+  <EntityType Name="group_key">
+    <Key>
+      <PropertyRef Name="groupKeyId" />
+    </Key>
+    <Property Name="userId" Type="Int64" />
+    <Property Name="groupKeyId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="groupKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="groupNo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="versionNo" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group_key" ToRole="group" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="group_key" ToRole="register" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="postId" />
+    </Key>
+    <Property Name="post1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="postType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="groupNo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="postId" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="versionNo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="digitalSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="owner" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="sessionKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_post_group" FromRole="post" ToRole="group" />
+  </EntityType>
+  <EntityType Name="register">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userName" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="userType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="userId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="publicKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="groups" Relationship="MlaDatabaseModel.FK_group_register" FromRole="register" ToRole="group" />
+    <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="register" ToRole="group_key" />
+  </EntityType>
+  <EntityContainer Name="MlaDatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="groups" EntityType="Self.group" />
+    <EntitySet Name="group_key" EntityType="Self.group_key" />
+    <EntitySet Name="posts" EntityType="Self.post" />
+    <EntitySet Name="registers" EntityType="Self.register" />
+    <AssociationSet Name="FK_group_key_group" Association="MlaDatabaseModel.FK_group_key_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="group_key" EntitySet="group_key" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_register" Association="MlaDatabaseModel.FK_group_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="group" EntitySet="groups" />
+    </AssociationSet>
+    <AssociationSet Name="FK_post_group" Association="MlaDatabaseModel.FK_post_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="post" EntitySet="posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_key_register" Association="MlaDatabaseModel.FK_group_key_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="group_key" EntitySet="group_key" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_group_key_group">
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="groupNo" />
+      </Principal>
+      <Dependent Role="group_key">
+        <PropertyRef Name="groupNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_post_group">
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.post" Role="post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="groupNo" />
+      </Principal>
+      <Dependent Role="post">
+        <PropertyRef Name="groupNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_key_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="group_key">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

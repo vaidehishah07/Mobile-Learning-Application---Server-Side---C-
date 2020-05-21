@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MlaDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MlaDatabaseEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admins" EntityType="MlaDatabaseModel.admin" />
+    <EntitySet Name="friendsTables" EntityType="MlaDatabaseModel.friendsTable" />
+    <EntitySet Name="registers" EntityType="MlaDatabaseModel.register" />
+    <AssociationSet Name="register_admin_fk" Association="MlaDatabaseModel.register_admin_fk">
+      <End Role="register" EntitySet="registers" />
+      <End Role="admin" EntitySet="admins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_friendsTable_register" Association="MlaDatabaseModel.FK_friendsTable_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="friendsTable" EntitySet="friendsTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_friendsTable_register1" Association="MlaDatabaseModel.FK_friendsTable_register1">
+      <End Role="register" EntitySet="registers" />
+      <End Role="friendsTable" EntitySet="friendsTables" />
+    </AssociationSet>
+    <EntitySet Name="group_key" EntityType="MlaDatabaseModel.group_key" />
+    <AssociationSet Name="FK_group_key_register" Association="MlaDatabaseModel.FK_group_key_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="group_key" EntitySet="group_key" />
+    </AssociationSet>
+    <EntitySet Name="groups" EntityType="MlaDatabaseModel.group" />
+    <AssociationSet Name="FK_group_key_group" Association="MlaDatabaseModel.FK_group_key_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="group_key" EntitySet="group_key" />
+    </AssociationSet>
+    <AssociationSet Name="FK_group_register" Association="MlaDatabaseModel.FK_group_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="group" EntitySet="groups" />
+    </AssociationSet>
+    <EntitySet Name="posts" EntityType="MlaDatabaseModel.post" />
+    <AssociationSet Name="FK_post_group" Association="MlaDatabaseModel.FK_post_group">
+      <End Role="group" EntitySet="groups" />
+      <End Role="post" EntitySet="posts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_post_register" Association="MlaDatabaseModel.FK_post_register">
+      <End Role="register" EntitySet="registers" />
+      <End Role="post" EntitySet="posts" />
+    </AssociationSet>
+    <EntitySet Name="students" EntityType="MlaDatabaseModel.student" />
+    <AssociationSet Name="register_student_fk" Association="MlaDatabaseModel.register_student_fk">
+      <End Role="register" EntitySet="registers" />
+      <End Role="student" EntitySet="students" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="idAdmin" />
+    </Key>
+    <Property Name="idAdmin" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="firstName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="emailId" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="userId" Type="Int64" />
+    <Property Name="aliasMailId" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="skypeId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.register_admin_fk" FromRole="admin" ToRole="register" />
+  </EntityType>
+  <EntityType Name="friendsTable">
+    <Key>
+      <PropertyRef Name="ftable_id" />
+    </Key>
+    <Property Name="ftable_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int64" />
+    <Property Name="friend_id" Type="Int64" />
+    <Property Name="groupNo" Type="Int32" />
+    <Property Name="Isaccepted" Type="Boolean" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_friendsTable_register" FromRole="friendsTable" ToRole="register" />
+    <NavigationProperty Name="register1" Relationship="MlaDatabaseModel.FK_friendsTable_register1" FromRole="friendsTable" ToRole="register" />
+  </EntityType>
+  <EntityType Name="register">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="userType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="userId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="publicKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="admins" Relationship="MlaDatabaseModel.register_admin_fk" FromRole="register" ToRole="admin" />
+    <NavigationProperty Name="friendsTables" Relationship="MlaDatabaseModel.FK_friendsTable_register" FromRole="register" ToRole="friendsTable" />
+    <NavigationProperty Name="friendsTables1" Relationship="MlaDatabaseModel.FK_friendsTable_register1" FromRole="register" ToRole="friendsTable" />
+    <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="register" ToRole="group_key" />
+    <NavigationProperty Name="groups" Relationship="MlaDatabaseModel.FK_group_register" FromRole="register" ToRole="group" />
+    <NavigationProperty Name="posts" Relationship="MlaDatabaseModel.FK_post_register" FromRole="register" ToRole="post" />
+    <NavigationProperty Name="students" Relationship="MlaDatabaseModel.register_student_fk" FromRole="register" ToRole="student" />
+  </EntityType>
+  <Association Name="register_admin_fk">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.admin" Role="admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="admin">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_friendsTable_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.friendsTable" Role="friendsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="friendsTable">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_friendsTable_register1">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.friendsTable" Role="friendsTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="friendsTable">
+        <PropertyRef Name="friend_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="group_key">
+    <Key>
+      <PropertyRef Name="groupKeyId" />
+    </Key>
+    <Property Name="groupKeyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int64" />
+    <Property Name="groupKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="groupNo" Type="Int32" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="group_key" ToRole="register" />
+    <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group_key" ToRole="group" />
+  </EntityType>
+  <Association Name="FK_group_key_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="group_key">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="group">
+    <Key>
+      <PropertyRef Name="groupNo" />
+    </Key>
+    <Property Name="groupNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int64" />
+    <Property Name="groupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="groupType" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group" ToRole="group_key" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_register" FromRole="group" ToRole="register" />
+    <NavigationProperty Name="posts" Relationship="MlaDatabaseModel.FK_post_group" FromRole="group" ToRole="post" />
+  </EntityType>
+  <Association Name="FK_group_key_group">
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="groupNo" />
+      </Principal>
+      <Dependent Role="group_key">
+        <PropertyRef Name="groupNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_group_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="group">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="postId" />
+    </Key>
+    <Property Name="postId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="postText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="postType" Type="Int32" />
+    <Property Name="groupNo" Type="Int32" />
+    <Property Name="timeStamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="digitalSignature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ownerId" Type="Int64" />
+    <Property Name="sessionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="originalPostId" Type="Int32" />
+    <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_post_group" FromRole="post" ToRole="group" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_post_register" FromRole="post" ToRole="register" />
+  </EntityType>
+  <Association Name="FK_post_group">
+    <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.post" Role="post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="group">
+        <PropertyRef Name="groupNo" />
+      </Principal>
+      <Dependent Role="post">
+        <PropertyRef Name="groupNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_post_register">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+    <End Type="MlaDatabaseModel.post" Role="post" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="post">
+        <PropertyRef Name="ownerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="student">
+    <Key>
+      <PropertyRef Name="idStudent" />
+    </Key>
+    <Property Name="idStudent" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="emailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="telephone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="userId" Type="Int64" Nullable="false" />
+    <Property Name="aliasMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="skypeId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="register" Relationship="MlaDatabaseModel.register_student_fk" FromRole="student" ToRole="register" />
+  </EntityType>
+  <Association Name="register_student_fk">
+    <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="1" />
+    <End Type="MlaDatabaseModel.student" Role="student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="register">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="student">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

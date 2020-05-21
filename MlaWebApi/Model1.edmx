@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MlaDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="45" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="45" />
+          <Property Name="emailId" Type="nvarchar" MaxLength="45" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="15" />
+          <Property Name="userId" Type="bigint" />
+          <Property Name="aliasMailId" Type="nvarchar" MaxLength="45" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="skypeId" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="friendsTable">
+          <Key>
+            <PropertyRef Name="ftable_id" />
+          </Key>
+          <Property Name="ftable_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="bigint" />
+          <Property Name="friend_id" Type="bigint" />
+          <Property Name="groupNo" Type="int" />
+          <Property Name="Isaccepted" Type="bit" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="groupNo" />
+          </Key>
+          <Property Name="groupNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="bigint" />
+          <Property Name="groupName" Type="nvarchar(max)" />
+          <Property Name="groupType" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="group_key">
+          <Key>
+            <PropertyRef Name="groupKeyId" />
+          </Key>
+          <Property Name="groupKeyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userId" Type="bigint" />
+          <Property Name="groupKey" Type="nvarchar(max)" />
+          <Property Name="groupNo" Type="int" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="postId" />
+          </Key>
+          <Property Name="postId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postText" Type="nvarchar(max)" />
+          <Property Name="postType" Type="int" />
+          <Property Name="groupNo" Type="int" />
+          <Property Name="timeStamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="digitalSignature" Type="nvarchar(max)" />
+          <Property Name="ownerId" Type="bigint" />
+          <Property Name="sessionKey" Type="nvarchar(max)" />
+          <Property Name="originalPostId" Type="int" />
+        </EntityType>
+        <EntityType Name="register">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userName" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="userType" Type="nvarchar(max)" />
+          <Property Name="userId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="publicKey" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="idStudent" />
+          </Key>
+          <Property Name="idStudent" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="emailId" Type="nvarchar" MaxLength="100" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="100" />
+          <Property Name="userId" Type="bigint" Nullable="false" />
+          <Property Name="aliasMailId" Type="nvarchar" MaxLength="100" />
+          <Property Name="skypeId" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_friendsTable_register">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="friendsTable" Type="Self.friendsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="friendsTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendsTable_register1">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="friendsTable" Type="Self.friendsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="friendsTable">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_key_group">
+          <End Role="group" Type="Self.group" Multiplicity="0..1" />
+          <End Role="group_key" Type="Self.group_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="groupNo" />
+            </Principal>
+            <Dependent Role="group_key">
+              <PropertyRef Name="groupNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_key_register">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="group_key" Type="Self.group_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="group_key">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_register">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="group" Type="Self.group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="group">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_group">
+          <End Role="group" Type="Self.group" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="groupNo" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="groupNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_register">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="register_admin_fk">
+          <End Role="register" Type="Self.register" Multiplicity="0..1" />
+          <End Role="admin" Type="Self.admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="register_student_fk">
+          <End Role="register" Type="Self.register" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MlaDatabaseModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="friendsTable" EntityType="Self.friendsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="group" EntityType="Self.group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="group_key" EntityType="Self.group_key" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="register" EntityType="Self.register" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_friendsTable_register" Association="Self.FK_friendsTable_register">
+            <End Role="register" EntitySet="register" />
+            <End Role="friendsTable" EntitySet="friendsTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendsTable_register1" Association="Self.FK_friendsTable_register1">
+            <End Role="register" EntitySet="register" />
+            <End Role="friendsTable" EntitySet="friendsTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_key_group" Association="Self.FK_group_key_group">
+            <End Role="group" EntitySet="group" />
+            <End Role="group_key" EntitySet="group_key" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_key_register" Association="Self.FK_group_key_register">
+            <End Role="register" EntitySet="register" />
+            <End Role="group_key" EntitySet="group_key" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_register" Association="Self.FK_group_register">
+            <End Role="register" EntitySet="register" />
+            <End Role="group" EntitySet="group" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_group" Association="Self.FK_post_group">
+            <End Role="group" EntitySet="group" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_register" Association="Self.FK_post_register">
+            <End Role="register" EntitySet="register" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="register_admin_fk" Association="Self.register_admin_fk">
+            <End Role="register" EntitySet="register" />
+            <End Role="admin" EntitySet="admin" />
+          </AssociationSet>
+          <AssociationSet Name="register_student_fk" Association="Self.register_student_fk">
+            <End Role="register" EntitySet="register" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MlaDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MlaDatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="MlaDatabaseModel.admin" />
+          <EntitySet Name="friendsTables" EntityType="MlaDatabaseModel.friendsTable" />
+          <EntitySet Name="registers" EntityType="MlaDatabaseModel.register" />
+          <AssociationSet Name="register_admin_fk" Association="MlaDatabaseModel.register_admin_fk">
+            <End Role="register" EntitySet="registers" />
+            <End Role="admin" EntitySet="admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendsTable_register" Association="MlaDatabaseModel.FK_friendsTable_register">
+            <End Role="register" EntitySet="registers" />
+            <End Role="friendsTable" EntitySet="friendsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendsTable_register1" Association="MlaDatabaseModel.FK_friendsTable_register1">
+            <End Role="register" EntitySet="registers" />
+            <End Role="friendsTable" EntitySet="friendsTables" />
+          </AssociationSet>
+          <EntitySet Name="group_key" EntityType="MlaDatabaseModel.group_key" />
+          <AssociationSet Name="FK_group_key_register" Association="MlaDatabaseModel.FK_group_key_register">
+            <End Role="register" EntitySet="registers" />
+            <End Role="group_key" EntitySet="group_key" />
+          </AssociationSet>
+          <EntitySet Name="groups" EntityType="MlaDatabaseModel.group" />
+          <AssociationSet Name="FK_group_key_group" Association="MlaDatabaseModel.FK_group_key_group">
+            <End Role="group" EntitySet="groups" />
+            <End Role="group_key" EntitySet="group_key" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_register" Association="MlaDatabaseModel.FK_group_register">
+            <End Role="register" EntitySet="registers" />
+            <End Role="group" EntitySet="groups" />
+          </AssociationSet>
+          <EntitySet Name="posts" EntityType="MlaDatabaseModel.post" />
+          <AssociationSet Name="FK_post_group" Association="MlaDatabaseModel.FK_post_group">
+            <End Role="group" EntitySet="groups" />
+            <End Role="post" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_register" Association="MlaDatabaseModel.FK_post_register">
+            <End Role="register" EntitySet="registers" />
+            <End Role="post" EntitySet="posts" />
+          </AssociationSet>
+          <EntitySet Name="students" EntityType="MlaDatabaseModel.student" />
+          <AssociationSet Name="register_student_fk" Association="MlaDatabaseModel.register_student_fk">
+            <End Role="register" EntitySet="registers" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="emailId" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="Int64" />
+          <Property Name="aliasMailId" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="skypeId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.register_admin_fk" FromRole="admin" ToRole="register" />
+        </EntityType>
+        <EntityType Name="friendsTable">
+          <Key>
+            <PropertyRef Name="ftable_id" />
+          </Key>
+          <Property Name="ftable_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int64" />
+          <Property Name="friend_id" Type="Int64" />
+          <Property Name="groupNo" Type="Int32" />
+          <Property Name="Isaccepted" Type="Boolean" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_friendsTable_register" FromRole="friendsTable" ToRole="register" />
+          <NavigationProperty Name="register1" Relationship="MlaDatabaseModel.FK_friendsTable_register1" FromRole="friendsTable" ToRole="register" />
+        </EntityType>
+        <EntityType Name="register">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="publicKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="admins" Relationship="MlaDatabaseModel.register_admin_fk" FromRole="register" ToRole="admin" />
+          <NavigationProperty Name="friendsTables" Relationship="MlaDatabaseModel.FK_friendsTable_register" FromRole="register" ToRole="friendsTable" />
+          <NavigationProperty Name="friendsTables1" Relationship="MlaDatabaseModel.FK_friendsTable_register1" FromRole="register" ToRole="friendsTable" />
+          <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="register" ToRole="group_key" />
+          <NavigationProperty Name="groups" Relationship="MlaDatabaseModel.FK_group_register" FromRole="register" ToRole="group" />
+          <NavigationProperty Name="posts" Relationship="MlaDatabaseModel.FK_post_register" FromRole="register" ToRole="post" />
+          <NavigationProperty Name="students" Relationship="MlaDatabaseModel.register_student_fk" FromRole="register" ToRole="student" />
+          </EntityType>
+        <Association Name="register_admin_fk">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.admin" Role="admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="admin">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendsTable_register">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.friendsTable" Role="friendsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="friendsTable">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendsTable_register1">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.friendsTable" Role="friendsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="friendsTable">
+              <PropertyRef Name="friend_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="group_key">
+          <Key>
+            <PropertyRef Name="groupKeyId" />
+          </Key>
+          <Property Name="groupKeyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int64" />
+          <Property Name="groupKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="groupNo" Type="Int32" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_key_register" FromRole="group_key" ToRole="register" />
+          <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group_key" ToRole="group" />
+        </EntityType>
+        <Association Name="FK_group_key_register">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="group_key">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="groupNo" />
+          </Key>
+          <Property Name="groupNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userId" Type="Int64" />
+          <Property Name="groupName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="groupType" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="group_key" Relationship="MlaDatabaseModel.FK_group_key_group" FromRole="group" ToRole="group_key" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_group_register" FromRole="group" ToRole="register" />
+          <NavigationProperty Name="posts" Relationship="MlaDatabaseModel.FK_post_group" FromRole="group" ToRole="post" />
+        </EntityType>
+        <Association Name="FK_group_key_group">
+          <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.group_key" Role="group_key" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="groupNo" />
+            </Principal>
+            <Dependent Role="group_key">
+              <PropertyRef Name="groupNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_register">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="group">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="postId" />
+          </Key>
+          <Property Name="postId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="postType" Type="Int32" />
+          <Property Name="groupNo" Type="Int32" />
+          <Property Name="timeStamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="digitalSignature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ownerId" Type="Int64" />
+          <Property Name="sessionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="originalPostId" Type="Int32" />
+          <NavigationProperty Name="group" Relationship="MlaDatabaseModel.FK_post_group" FromRole="post" ToRole="group" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.FK_post_register" FromRole="post" ToRole="register" />
+        </EntityType>
+        <Association Name="FK_post_group">
+          <End Type="MlaDatabaseModel.group" Role="group" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.post" Role="post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="group">
+              <PropertyRef Name="groupNo" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="groupNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_register">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="0..1" />
+          <End Type="MlaDatabaseModel.post" Role="post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="ownerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="idStudent" />
+          </Key>
+          <Property Name="idStudent" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="emailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userId" Type="Int64" Nullable="false" />
+          <Property Name="aliasMailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="skypeId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="register" Relationship="MlaDatabaseModel.register_student_fk" FromRole="student" ToRole="register" />
+        </EntityType>
+        <Association Name="register_student_fk">
+          <End Type="MlaDatabaseModel.register" Role="register" Multiplicity="1" />
+          <End Type="MlaDatabaseModel.student" Role="student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="register">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MlaDatabaseModelStoreContainer" CdmEntityContainer="MlaDatabaseEntities1">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="skypeId" ColumnName="skypeId" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="aliasMailId" ColumnName="aliasMailId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="emailId" ColumnName="emailId" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="friendsTables">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.friendsTable">
+              <MappingFragment StoreEntitySet="friendsTable">
+                <ScalarProperty Name="Isaccepted" ColumnName="Isaccepted" />
+                <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+                <ScalarProperty Name="friend_id" ColumnName="friend_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="ftable_id" ColumnName="ftable_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registers">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.register">
+              <MappingFragment StoreEntitySet="register">
+                <ScalarProperty Name="publicKey" ColumnName="publicKey" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="userType" ColumnName="userType" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="group_key">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.group_key">
+              <MappingFragment StoreEntitySet="group_key">
+                <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+                <ScalarProperty Name="groupKey" ColumnName="groupKey" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="groupKeyId" ColumnName="groupKeyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groups">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.group">
+              <MappingFragment StoreEntitySet="group">
+                <ScalarProperty Name="groupType" ColumnName="groupType" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.post">
+              <MappingFragment StoreEntitySet="post">
+                <ScalarProperty Name="originalPostId" ColumnName="originalPostId" />
+                <ScalarProperty Name="sessionKey" ColumnName="sessionKey" />
+                <ScalarProperty Name="ownerId" ColumnName="ownerId" />
+                <ScalarProperty Name="digitalSignature" ColumnName="digitalSignature" />
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+                <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+                <ScalarProperty Name="postType" ColumnName="postType" />
+                <ScalarProperty Name="postText" ColumnName="postText" />
+                <ScalarProperty Name="postId" ColumnName="postId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="MlaDatabaseModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="skypeId" ColumnName="skypeId" />
+                <ScalarProperty Name="aliasMailId" ColumnName="aliasMailId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="emailId" ColumnName="emailId" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="idStudent" ColumnName="idStudent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

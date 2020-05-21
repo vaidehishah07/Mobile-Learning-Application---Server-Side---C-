@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2fd97df65d2745979730d589ec16238c" Name="Diagram1" ZoomLevel="56">
+        <EntityTypeShape EntityType="MlaDatabaseModel.admin" Width="1.5" PointX="2.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MlaDatabaseModel.friendsTable" Width="1.5" PointX="5.125" PointY="4" />
+        <EntityTypeShape EntityType="MlaDatabaseModel.register" Width="1.5" PointX="0.75" PointY="6.625" />
+        <AssociationConnector Association="MlaDatabaseModel.register_admin_fk" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_friendsTable_register" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_friendsTable_register1" />
+        <EntityTypeShape EntityType="MlaDatabaseModel.group_key" Width="1.5" PointX="8.25" PointY="7.125" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_group_key_register" />
+        <EntityTypeShape EntityType="MlaDatabaseModel.group" Width="1.5" PointX="3.125" PointY="6.375" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_group_key_group" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_group_register" />
+        <EntityTypeShape EntityType="MlaDatabaseModel.post" Width="1.5" PointX="5.375" PointY="7.5" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_post_group" />
+        <AssociationConnector Association="MlaDatabaseModel.FK_post_register" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

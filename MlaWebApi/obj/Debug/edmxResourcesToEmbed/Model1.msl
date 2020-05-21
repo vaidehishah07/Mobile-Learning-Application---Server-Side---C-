@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MlaDatabaseModelStoreContainer" CdmEntityContainer="MlaDatabaseEntities1">
+    <EntitySetMapping Name="groups">
+      <EntityTypeMapping TypeName="MlaDatabaseModel.group">
+        <MappingFragment StoreEntitySet="group">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+          <ScalarProperty Name="groupName" ColumnName="groupName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="group_key">
+      <EntityTypeMapping TypeName="MlaDatabaseModel.group_key">
+        <MappingFragment StoreEntitySet="group_key">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="groupKeyId" ColumnName="groupKeyId" />
+          <ScalarProperty Name="groupKey" ColumnName="groupKey" />
+          <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="versionNo" ColumnName="versionNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="registers">
+      <EntityTypeMapping TypeName="MlaDatabaseModel.register">
+        <MappingFragment StoreEntitySet="register">
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="userType" ColumnName="userType" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="publicKey" ColumnName="publicKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="posts">
+      <EntityTypeMapping TypeName="MlaDatabaseModel.post">
+        <MappingFragment StoreEntitySet="post">
+          <ScalarProperty Name="sessionKey" ColumnName="sessionKey" />
+          <ScalarProperty Name="owner" ColumnName="owner" />
+          <ScalarProperty Name="digitalSign" ColumnName="digitalSign" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+          <ScalarProperty Name="versionNo" ColumnName="versionNo" />
+          <ScalarProperty Name="postId" ColumnName="postId" />
+          <ScalarProperty Name="groupNo" ColumnName="groupNo" />
+          <ScalarProperty Name="postType" ColumnName="postType" />
+          <ScalarProperty Name="post1" ColumnName="post" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="friendsTables">
+      <EntityTypeMapping TypeName="MlaDatabaseModel.friendsTable">
+        <MappingFragment StoreEntitySet="friendsTable">
+          <ScalarProperty Name="friend_id" ColumnName="friend_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="ftable_id" ColumnName="ftable_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

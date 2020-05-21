@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="MlaDatabase-Web.config Connection String" description="MlaDatabase Connection String used in web.config by the application to access the database." defaultValue="Data Source=database-mla.c7emtw8ly2wf.us-west-1.rds.amazonaws.com,1433;Initial Catalog=MlaDatabase;User ID=admin;Password=SHAH12345" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vaidehi\ Shah\\Desktop\\courses\ for\ spring\ 2020\\CSC258\\NET\ Server\ Project\\jinsongo-mla-server-d05b9a4780cf\\MlaWebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MlaDatabase']/@connectionString" />
+  </parameter>
+  <parameter name="MlaDatabaseEntities-Web.config Connection String" description="MlaDatabaseEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/MlaModel.csdl|res://*/MlaModel.ssdl|res://*/MlaModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=database-mla.c7emtw8ly2wf.us-west-1.rds.amazonaws.com,1433;initial catalog=MlaDatabase;user id=admin;password=SHAH12345;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vaidehi\ Shah\\Desktop\\courses\ for\ spring\ 2020\\CSC258\\NET\ Server\ Project\\jinsongo-mla-server-d05b9a4780cf\\MlaWebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MlaDatabaseEntities']/@connectionString" />
+  </parameter>
+  <parameter name="MlaDatabaseEntities1-Web.config Connection String" description="MlaDatabaseEntities1 Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Model1.csdl|res://*/Model1.ssdl|res://*/Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=database-mla.c7emtw8ly2wf.us-west-1.rds.amazonaws.com,1433;initial catalog=MlaDatabase;user id=admin;password=SHAH12345;multipleactiveresultsets=True;application name=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Vaidehi\ Shah\\Desktop\\courses\ for\ spring\ 2020\\CSC258\\NET\ Server\ Project\\jinsongo-mla-server-d05b9a4780cf\\MlaWebApi\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='MlaDatabaseEntities1']/@connectionString" />
+  </parameter>
+</parameters>
